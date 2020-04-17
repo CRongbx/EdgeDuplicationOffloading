@@ -1,27 +1,27 @@
 function [ AEST,ALST ] =  TimeEstimate( TaskDAG, ServerList, TransRate, UserList, UserNum, delta)
-% TimeEstimate ¸ù¾ÝDAGºÍ´«ÊäËÙÂÊ¹ÀËãÈÎÎñÆ½¾ù×îÔç¿ªÊ¼Ê±¼äAESTºÍÆ½¾ù×îÍí¿ªÊ¼Ê±¼äALST
-% ÊäÈë£º
-%   -TaskDAG£ºÓÃ»§UserNumµÄÈÎÎñDAGÍ¼£¬£¨i,i£©CPU cycles,(i,j)=x (j,i)=-x ±ß´Óiµ½j£¬Í¨ÐÅ¿ªÏúx KB
-% Êä³ö£º
+% TimeEstimate æ ¹æ®DAGå’Œä¼ è¾“é€ŸçŽ‡ä¼°ç®—ä»»åŠ¡å¹³å‡æœ€æ—©å¼€å§‹æ—¶é—´AESTå’Œå¹³å‡æœ€æ™šå¼€å§‹æ—¶é—´ALST
+% è¾“å…¥ï¼š
+%   -TaskDAGï¼šç”¨æˆ·UserNumçš„ä»»åŠ¡DAGå›¾ï¼Œï¼ˆi,iï¼‰CPU cycles,(i,j)=x (j,i)=-x è¾¹ä»Žiåˆ°jï¼Œé€šä¿¡å¼€é”€x KB
+% è¾“å‡ºï¼š
 %   -AEST&ALST (ms)
 
 
-    % ¼ÆËãÈÎÎñiÖÐÃ¿¸ö×ÓÈÎÎñµÄµÄÆ½¾ù¼ÆËãÊ±¼äºÍÍ¨ÐÅÏûºÄÊ±¼ä
-        % ÈÎÎñiÖÐ×ÓÈÎÎñµÄÆ½¾ù¼ÆËã¿ªÏú ms
+    % è®¡ç®—ä»»åŠ¡iä¸­æ¯ä¸ªå­ä»»åŠ¡çš„çš„å¹³å‡è®¡ç®—æ—¶é—´å’Œé€šä¿¡æ¶ˆè€—æ—¶é—´
+        % ä»»åŠ¡iä¸­å­ä»»åŠ¡çš„å¹³å‡è®¡ç®—å¼€é”€ ms
     MeanComputeCost = zeros(1, UserList(UserNum).NodeCount);
-        % ÈÎÎñiÖÐÃ¿¸ö×ÓÈÎÎñ¼äµÄÆ½¾ùÍ¨ÐÅ¿ªÏú ms(inf±íÊ¾×ÓÈÎÎñÖ®¼äÎÞÍ¨ÐÅ¹ØÏµ);i->j, (i,j)>0 (j,i)<0
+        % ä»»åŠ¡iä¸­æ¯ä¸ªå­ä»»åŠ¡é—´çš„å¹³å‡é€šä¿¡å¼€é”€ ms(infè¡¨ç¤ºå­ä»»åŠ¡ä¹‹é—´æ— é€šä¿¡å…³ç³»);i->j, (i,j)>0 (j,i)<0
     MeanCommunCost = zeros(UserList(UserNum).NodeCount,UserList(UserNum).NodeCount); 
-        % ±äÁ¿³õÊ¼»¯--MeanComputeCost
+        % å˜é‡åˆå§‹åŒ–--MeanComputeCost
     for i = 1 : UserList(UserNum).NodeCount
-        SumComputeCost = 0;  % ËùÓÐ×ÓÈÎÎñ×ÜCPU cycles (Mega)
+        SumComputeCost = 0;  % æ‰€æœ‰å­ä»»åŠ¡æ€»CPU cycles (Mega)
         for j = 1 : UserList(UserNum).NodeCount
             SumComputeCost = SumComputeCost + TaskDAG(j,j); 
         end
         MeanComputeCost(1,i) = SumComputeCost/UserList(UserNum).CPUFreq;  % Megacycles/GHz = ms
 
     end
-        % ±äÁ¿³õÊ¼»¯--MeanCommunCost
-            % ¼ÆËã·þÎñÆ÷ÕóÁÐÓëÓÃ»§iµÄÆ½¾ùÍ¨ÐÅËÙÂÊMeanTransRate
+        % å˜é‡åˆå§‹åŒ–--MeanCommunCost
+            % è®¡ç®—æœåŠ¡å™¨é˜µåˆ—ä¸Žç”¨æˆ·içš„å¹³å‡é€šä¿¡é€ŸçŽ‡MeanTransRate
     MeanTransRate = 0;
     for s = 1 : ServerList.ServerCount
         MeanTransRate = MeanTransRate + TransRate(UserNum,s);
@@ -29,9 +29,9 @@ function [ AEST,ALST ] =  TimeEstimate( TaskDAG, ServerList, TransRate, UserList
     MeanTransRate = MeanTransRate / ServerList.ServerCount;
     for t1 = 1 : UserList(UserNum).NodeCount  % suntask t1
        for t2 = 1  : UserList(UserNum).NodeCount  % suntask t2
-          % ÏÈÅÐ¶Ï×ÓÈÎÎñt1-t2ÊÇ·ñÓÐÍ¨ÐÅ¹ØÏµ¡£Èô´æÔÚÍ¨ÐÅ¹ØÏµ£¬ÇóµÃÈÎÎñiºÍÃ¿¸ö·þÎñÆ÷µÄ´«ÊäËÙÂÊÆ½¾ùÖµ£¬t1-t2´«ÊäÊý¾Ý´óÐ¡/Æ½¾ù´«ÊäËÙÂÊ
-          % µÃµ½Ã¿¸ö×Ó½Úµã¼äµÄÆ½¾ùÍ¨ÐÅ¿ªÏú
-          if TaskDAG(t1,t2) ~= 0    % Á½¸ö×ÓÈÎÎñ´æÔÚÍ¨ÐÅ¹ØÏµ
+          % å…ˆåˆ¤æ–­å­ä»»åŠ¡t1-t2æ˜¯å¦æœ‰é€šä¿¡å…³ç³»ã€‚è‹¥å­˜åœ¨é€šä¿¡å…³ç³»ï¼Œæ±‚å¾—ä»»åŠ¡iå’Œæ¯ä¸ªæœåŠ¡å™¨çš„ä¼ è¾“é€ŸçŽ‡å¹³å‡å€¼ï¼Œt1-t2ä¼ è¾“æ•°æ®å¤§å°/å¹³å‡ä¼ è¾“é€ŸçŽ‡
+          % å¾—åˆ°æ¯ä¸ªå­èŠ‚ç‚¹é—´çš„å¹³å‡é€šä¿¡å¼€é”€
+          if TaskDAG(t1,t2) ~= 0    % ä¸¤ä¸ªå­ä»»åŠ¡å­˜åœ¨é€šä¿¡å…³ç³»
               MeanCommunCost(t1,t2) = TaskDAG(t1,t2)/MeanTransRate;
               MeanCommunCost(t2,t1) = -MeanCommunCost(t1,t2);
           else
@@ -41,7 +41,7 @@ function [ AEST,ALST ] =  TimeEstimate( TaskDAG, ServerList, TransRate, UserList
        end
     end
 
-    % ¼ÆËãUserNumÓÃ»§µÄAESTºÍALST
+    % è®¡ç®—UserNumç”¨æˆ·çš„AESTå’ŒALST
     AEST = zeros(1,UserList(UserNum).NodeCount)-1;
     ALST = AEST;
     AEST = GetAEST(TaskDAG,UserNum,UserList(UserNum).NodeCount,MeanCommunCost,MeanComputeCost);

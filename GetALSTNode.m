@@ -1,12 +1,12 @@
 function [ ALST ] = GetALSTNode( TaskDAG,UserNum,NodeCount,MeanCommunCost,MeanComputeCost,lable )
-%GetALSTNode »ñµÃ×ÓÈÎÎñlableµÄALST
+%GetALSTNode èŽ·å¾—å­ä»»åŠ¡lableçš„ALST
     if ALST(1,i) >= 0 
         return 
     end
     
     Min = inf;
     for i = 1 : NodeCount
-       if TaskDAG(i,lable) < 0 % iÊÇlableµÄºó¼Ì½Úµã
+       if TaskDAG(i,lable) < 0 % iæ˜¯lableçš„åŽç»§èŠ‚ç‚¹
            if ALST(1,i) < 0
                ALST = GetALSTNode(TaskDAG,UserNum,NodeCount,MeanCommunCost,MeanComputeCost,i);
            end

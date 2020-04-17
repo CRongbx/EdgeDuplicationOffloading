@@ -1,15 +1,15 @@
 function [ SchedulResult ] = DTOA( TaskDAG, ServerList, TransRate, UserList, delta)
 %DTOA: Algorithm1: the Duplication-based task offloading Algorithm
-%Ëã·¨ÏŞÖÆ: µ¥ÓÃ»§£¬¶à·şÎñÆ÷£¬·şÎñÆ÷×ÊÔ´Òì¹¹£¬²»¿¼ÂÇÓÃ»§ÄÜºÄÏŞÖÆ
-%ÊäÈë: 
-%   -TaskDAG£ºÓÃ»§iµÄÈÎÎñDAGÍ¼£¬£¨i,i£©CPU cycles,(i,j)=x (j,i)=-x ±ß´Óiµ½j£¬Í¨ĞÅ¿ªÏúx KB
-%   -ServerList: ·şÎñÆ÷ÕóÁĞ Èı¸öÔªËØ£ºCPUFreq,IsIdle(1¿ÕÏĞ),ServerNum(±àºÅ),ServerCount£¨×ÜÊı£©
-%   -TransRate: ÓÃ»§iºÍ·şÎñÆ÷jµÄÍ¨ĞÅËÙÂÊ¾ØÕó£¨N*M£©
-%   -UesrList:ÓÃ»§ÁĞ±í Èı¸öÔªËØ£ºCPUFreq, EnergyAware, UserCount£¨×ÜÓÃ»§Êı£©,NodeCount(×ÓÈÎÎñÊıÁ¿)
-%   -UserNum: ¸ÃÓÃ»§µÄ±àºÅ
-%   -delta: Rank½×¶Î£¬ÅĞ¶ÏAESTºÍALSTÏàµÈµÄÎó²î·¶Î§
-%Êä³ö£º
-%   -ScheduleResult:µ÷¶È½á¹û(J*(M+1)) JÎª×ÓÈÎÎñÊıÄ¿£¬µÚ1ÁĞ±íÊ¾±¾µØÖ´ĞĞ£¬ÔªËØÖ»ÓĞ1ºÍ0Á½Àà
+%ç®—æ³•é™åˆ¶: å•ç”¨æˆ·ï¼Œå¤šæœåŠ¡å™¨ï¼ŒæœåŠ¡å™¨èµ„æºå¼‚æ„ï¼Œä¸è€ƒè™‘ç”¨æˆ·èƒ½è€—é™åˆ¶
+%è¾“å…¥: 
+%   -TaskDAGï¼šç”¨æˆ·içš„ä»»åŠ¡DAGå›¾ï¼Œï¼ˆi,iï¼‰CPU cycles,(i,j)=x (j,i)=-x è¾¹ä»iåˆ°jï¼Œé€šä¿¡å¼€é”€x KB
+%   -ServerList: æœåŠ¡å™¨é˜µåˆ— ä¸‰ä¸ªå…ƒç´ ï¼šCPUFreq,IsIdle(1ç©ºé—²),ServerNum(ç¼–å·),ServerCountï¼ˆæ€»æ•°ï¼‰
+%   -TransRate: ç”¨æˆ·iå’ŒæœåŠ¡å™¨jçš„é€šä¿¡é€Ÿç‡çŸ©é˜µï¼ˆN*Mï¼‰
+%   -UesrList:ç”¨æˆ·åˆ—è¡¨ ä¸‰ä¸ªå…ƒç´ ï¼šCPUFreq, EnergyAware, UserCountï¼ˆæ€»ç”¨æˆ·æ•°ï¼‰,NodeCount(å­ä»»åŠ¡æ•°é‡)
+%   -UserNum: è¯¥ç”¨æˆ·çš„ç¼–å·
+%   -delta: Ranké˜¶æ®µï¼Œåˆ¤æ–­AESTå’ŒALSTç›¸ç­‰çš„è¯¯å·®èŒƒå›´
+%è¾“å‡ºï¼š
+%   -ScheduleResult:è°ƒåº¦ç»“æœ(J*(M+1)) Jä¸ºå­ä»»åŠ¡æ•°ç›®ï¼Œç¬¬1åˆ—è¡¨ç¤ºæœ¬åœ°æ‰§è¡Œï¼Œå…ƒç´ åªæœ‰1å’Œ0ä¸¤ç±»
 
 
 end

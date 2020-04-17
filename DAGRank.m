@@ -1,10 +1,10 @@
 function [ RankList ] = DAGRank( TaskDAG, ServerList, TransRate, UserList, UserNum, delta )
-%DAGRank ¶ÔÈÎÎñDAGµİÔöÅÅĞò
-%Ë¼Â·£º¼ÆËãAEST(the average earliest start time)ºÍALST(the average lastest start
-%   time)£¬»ùÓÚ´Ë¼ÆËã½á¹ûÈ·¶¨¹Ø¼üÂ·¾¶£¨AOEÍø¹Ø¼üÂ·¾¶·¨£©£¬´Ó¶øµÃµ½ÅÅĞò½á¹û
+%DAGRank å¯¹ä»»åŠ¡DAGé€’å¢æ’åº
+%æ€è·¯ï¼šè®¡ç®—AEST(the average earliest start time)å’ŒALST(the average lastest start
+%   time)ï¼ŒåŸºäºæ­¤è®¡ç®—ç»“æœç¡®å®šå…³é”®è·¯å¾„ï¼ˆAOEç½‘å…³é”®è·¯å¾„æ³•ï¼‰ï¼Œä»è€Œå¾—åˆ°æ’åºç»“æœ
 [AEST, ALST] = TimeEstimate( TaskDAG, ServerList, TransRate, UserList, UserNum, delta);
 [CriticalPath, PathLen] = FindCriticalPath(AEST,ALST,UserList(UserNum).NodeCount);
-PrioritySort;
+RankList = PrioritySort(TaskDAG, UserList(UserNum).NodeCount, CriticalPath, PathLen);
 
 end
 

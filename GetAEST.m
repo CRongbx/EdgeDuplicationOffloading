@@ -1,7 +1,7 @@
 function [ AEST ] = GetAEST( TaskDAG,UserNum,NodeCount,MeanCommunCost,MeanComputeCost )
-%GetAEST 计算用户UserNum的所有子任务AEST
-%   AEST = max{pred_AEST+本节点MeanComputeCost+本节点和前驱节点平均通信开销} 
-    AEST(1,1) = 0;  % 起始节点的最早开始时间为0
+%GetAEST 璁＄畻鐢ㄦ埛UserNum鐨勬墍鏈夊瓙浠诲姟AEST
+%   AEST = max{pred_AEST+鏈妭鐐筂eanComputeCost+鏈妭鐐瑰拰鍓嶉┍鑺傜偣骞冲潎閫氫俊寮�閿�} 
+    AEST(1,1) = 0;  % 璧峰鑺傜偣鐨勬渶鏃╁紑濮嬫椂闂翠负0
     for i = 2 : NodeCount
        AEST = GetAESTNode(TaskDAG, UserNum,NodeCount, MeanCommunCost,MeanComputeCost,i); 
     end

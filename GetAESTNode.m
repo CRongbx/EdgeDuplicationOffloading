@@ -1,15 +1,15 @@
 function [ AEST ] = GetAESTNode( TaskDAG,UserNum,NodeCount,MeanCommunCost,MeanComputeCost, lable )
-%GetAESTNode ���������lable��AEST
-%   AEST = max{pred_AEST+���ڵ�MeanComputeCost+���ڵ��ǰ���ڵ�ƽ��ͨ�ſ���} [�ݹ鴦��]
-%   AEST(1,i)��ʼֵΪ-1��(1,1)=0
-    if AEST(1,lable) >= 0   % �Ѿ�������������ٵݹ�
+%GetAESTNode 获得子任务lable的AEST
+%   AEST = max{pred_AEST+本节点MeanComputeCost+本节点和前驱节点平均通信开销} [递归处理]
+%   AEST(1,i)初始值为-1，(1,1)=0
+    if AEST(1,lable) >= 0   % 已经计算过，不用再递归
      return
     end
     
     Max = -1;
-    % ����Ѱ��lable��ǰ���ڵ�i������ǰ���ڵ��AESTҲû������ݹ����
+    % 遍历寻找lable的前驱节点i，若该前驱节点的AEST也没计算则递归计算
     for i = 1 : NodeCount
-        if TaskDAG(lable,i) < 0 % i��lable��ǰ���ڵ�
+        if TaskDAG(lable,i) < 0 % i是lable的前驱节点
             if AEST(1,i) < 0            
                 AEST = GetAESTNode(TaskDAG,UserNum,NodeCount,MeanCommunCost,MeanComputeCost,i);
             end
