@@ -1,0 +1,4 @@
+CPU主频 GHZ
+任务计算量（CPU循环次数）Mega cycles
+处理时间 ms
+
