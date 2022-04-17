@@ -1,2 +1,1 @@
-# EdgeDuplicationOffloading
-边缘计算中基于重复子任务的卸载算法MATLAB仿真实现
+
